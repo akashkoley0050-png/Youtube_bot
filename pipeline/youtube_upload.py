@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -61,7 +62,20 @@ def _creds_from_files(client_secret_path: Path, token_path: Path) -> Credentials
 def _get_creds() -> Credentials:
     creds = _creds_from_env()
     if creds:
-        creds.refresh(Request())
+        try:
+            creds.refresh(Request())
+        except RefreshError as e:
+            raise RuntimeError(
+                "\n\n❌ YT_REFRESH_TOKEN is invalid or expired.\n"
+                "   Common cause: OAuth consent screen is in 'Testing' mode "
+                "(tokens expire after 7 days).\n\n"
+                "   FIX:\n"
+                "   1. Go to https://console.cloud.google.com/apis/credentials/consent\n"
+                "      → click PUBLISH APP (ignore the 'Needs verification' warning).\n"
+                "   2. Regenerate locally:  python scripts/youtube_auth.py\n"
+                "   3. Update GitHub secret YT_REFRESH_TOKEN with the new value.\n\n"
+                f"   Underlying error: {e}"
+            ) from e
         return creds
     client_secret = Path(os.environ.get("YT_CLIENT_SECRET", "secrets/client_secret.json"))
     token = Path(os.environ.get("YT_TOKEN", "secrets/youtube_token.json"))
