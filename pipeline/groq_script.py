@@ -34,7 +34,7 @@ LANG_WORD_TARGETS = {
 }
 
 # Bilingual presets override per variant; these are fallbacks only.
-DEFAULT_MIN_WORDS = {"hi": 80, "en": 80}
+DEFAULT_MIN_WORDS = {"hi": 50, "en": 50}
 
 
 def _lang_label(lang: str) -> str:
