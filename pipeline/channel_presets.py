@@ -42,6 +42,8 @@ class ChannelPreset(TypedDict, total=False):
     yt_token_env: str
     # Extra uploads: same MP4 uploaded to additional channels using these env var names
     extra_yt_token_envs: list[str]
+    # YouTube playlist to add videos to
+    playlist_id: str
 
 
 PRESETS: dict[str, ChannelPreset] = {
@@ -242,6 +244,7 @@ PRESETS: dict[str, ChannelPreset] = {
         "caption_font": "BebasNeue-Regular.ttf",
         "caption_font_name": "Bebas Neue",
         "yt_token_env": "YT_REFRESH_TOKEN_POTTER",
+        "playlist_id": "PLJVw55ogDo6PFBrXvO57WuIwgi7YByCOV",
         "groq_system_hint": (
             "You write engaging YouTube Shorts about Harry Potter — the wizarding world, characters, lore, and fan theories. "
             "LANGUAGE: full_narration, youtube_title, youtube_description entirely in English. "
