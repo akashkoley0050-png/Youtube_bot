@@ -125,3 +125,29 @@ def upload_short(
     if not response or "id" not in response:
         raise RuntimeError(f"Unexpected YouTube API response: {response!r}")
     return str(response["id"])
+
+
+def add_video_to_playlist(
+    video_id: str,
+    playlist_id: str,
+    *,
+    refresh_token_env: str = "YT_REFRESH_TOKEN",
+) -> str:
+    """Add an uploaded video to a playlist. Returns the playlistItem ID."""
+    creds = _get_creds(refresh_token_env)
+    youtube = build("youtube", "v3", credentials=creds)
+
+    body = {
+        "snippet": {
+            "playlistId": playlist_id,
+            "resourceId": {
+                "kind": "youtube#video",
+                "videoId": video_id,
+            },
+        },
+    }
+    request = youtube.playlistItems().insert(part="snippet", body=body)
+    response = request.execute()
+    if not response or "id" not in response:
+        raise RuntimeError(f"Failed to add video to playlist: {response!r}")
+    return str(response["id"])
