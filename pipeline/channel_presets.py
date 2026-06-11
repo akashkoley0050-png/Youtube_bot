@@ -300,6 +300,7 @@ PRESETS: dict[str, ChannelPreset] = {
     "ghost_stories": {
         "id": "ghost_stories",
         "label": "Ghost / horror storytime Short",
+        "playlist_id": "PLJVw55ogDo6MQo7ZzsWMUbEuwZLh50rGq",
         "groq_system_hint": (
             "You write spooky ghost story Shorts for YouTube. "
             "CRITICAL LENGTH RULE: The TOTAL word count across ALL 6 segments MUST be 120-140 words. "
