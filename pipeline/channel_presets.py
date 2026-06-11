@@ -36,6 +36,7 @@ class ChannelPreset(TypedDict, total=False):
     # Multi-variant mode — Groq returns translations for each lang, pipeline renders+uploads per variant.
     variants: list[Variant]
     # topic_rotation: "myth" → pipeline/myth_topics.py (IST day theme + no-repeat within theme)
+    # or "harry_potter" → pipeline/harry_potter_topics.py (daily theme rotation)
     topic_rotation: str
     # Single-variant YouTube upload: which env var holds this channel's refresh token
     yt_token_env: str
@@ -229,6 +230,36 @@ PRESETS: dict[str, ChannelPreset] = {
             "photorealistic human face close-up as real celebrity, gore, blood, horror jumpscare, "
             "disrespectful parody, political symbols, watermark, text, logo, blurry, low quality, "
             "multiple conflicting styles, broken anatomy"
+        ),
+        "topic_pool": [],
+    },
+    "harry_potter": {
+        "id": "harry_potter",
+        "label": "Harry Potter Shorts (Hogwarts → Characters → Spells → Houses → Dark Arts → Behind Scenes)",
+        "topic_rotation": "harry_potter",
+        "language": "en",
+        "tts_voice": "en-US-JennyNeural",
+        "caption_font": "BebasNeue-Regular.ttf",
+        "caption_font_name": "Bebas Neue",
+        "yt_token_env": "YT_REFRESH_TOKEN_POTTER",
+        "groq_system_hint": (
+            "You write engaging YouTube Shorts about Harry Potter — the wizarding world, characters, lore, and fan theories. "
+            "LANGUAGE: full_narration, youtube_title, youtube_description entirely in English. "
+            "IMAGE PROMPTS: English only — cinematic scenes from Hogwarts, characters, spells, and magical moments. "
+            "CRITICAL LENGTH: full_narration 110-145 English words (~40-50 sec spoken). "
+            "Tone: enthusiastic, storytelling, respectful of the source material. Mix canon facts with fascinating details. "
+            "Include book or movie references where relevant. PG-13, no graphic violence. "
+            "No hashtags in narration. Cover Harry Potter characters, spells, locations, theories, and behind-the-scenes magic lore."
+        ),
+        "segment_count": 5,
+        "image_style_suffix": (
+            ", cinematic fantasy illustration, magical atmosphere, vibrant magical effects, "
+            "Hogwarts castle aesthetic, mystical lighting, enchanted scenes, epic fantasy art, "
+            "high quality digital painting, no text, no watermark, no logos"
+        ),
+        "image_negative_prompt": (
+            "photorealistic, photograph, low quality, blurry, watermark, logo, text, signature, "
+            "ugly, deformed, gore, blood, child-unsafe, anime, cartoon"
         ),
         "topic_pool": [],
     },
