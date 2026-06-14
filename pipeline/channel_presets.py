@@ -334,6 +334,7 @@ PRESETS: dict[str, ChannelPreset] = {
     "ghost_stories": {
         "id": "ghost_stories",
         "label": "Ghost / horror storytime Short",
+        "yt_token_env": "YT_REFRESH_TOKEN_GHOST",
         "playlist_id": "PLJVw55ogDo6MQo7ZzsWMUbEuwZLh50rGq",
         "groq_system_hint": (
             "You write spooky ghost story Shorts for YouTube. "
